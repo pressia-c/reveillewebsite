@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Réveillé Pilot Program</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --navy: #13273F;
+            --charcoal: #272836;
+            --cream: #E7E5DB;
+            --warm-white: #F5F4EF;
+            --accent-sage: #8B9B8E;
+            --accent-gold: #C9A961;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--warm-white) 100%);
+            color: var(--navy);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .waitlist-container {
+            max-width: 700px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            padding: 4rem 3rem;
+            box-shadow: 0 20px 60px rgba(19, 39, 63, 0.15);
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .logo {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--navy);
+        }
+        
+        .subtitle {
+            text-align: center;
+            font-size: 1.25rem;
+            color: var(--charcoal);
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+        
+        .offer-box {
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
+            color: var(--cream);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offer-box::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 4rem;
+            opacity: 0.1;
+        }
+        
+        .offer-box h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .offer-box p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .offer-box strong {
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+        
+        .offer-list {
+            list-style: none;
+            margin-top: 1rem;
+            padding-left: 0;
+        }
+        
+        .offer-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .offer-list li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: 600;
+        }
+        
+        .form-group {
+            margin-bottom: 2rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        .question-label {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.35rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+        
+        input[type="email"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--warm-white);
+            color: var(--navy);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-sage);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 155, 142, 0.1);
+        }
+        
+        .hint {
+            font-size: 0.85rem;
+            color: var(--charcoal);
+            opacity: 0.6;
+            margin-top: 0.5rem;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
+            color: var(--cream);
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(19, 39, 63, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        .success-message {
+            display: none;
+            background: var(--accent-sage);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            text-align: center;
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .success-message h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-message p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--charcoal);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .waitlist-container {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .offer-box {
+                padding: 1.5rem;
+            }
+            
+            .offer-box h3 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="waitlist-container">
+        <h1 class="logo">Réveillé</h1>
+        <p class="subtitle">Join the Pilot Program</p>
+        
+        <div class="offer-box">
+            <h3>🎁 Lifetime Free Access</h3>
+            <p>Early users are paramount to us. Here's our commitment to you:</p>
+            <p><strong>If you do ANY of the following, you get free access for life:</strong></p>
+            <ul class="offer-list">
+                <li>Drop <strong>5 feedback submissions</strong> over 3 months</li>
+                <li>Feature us on your Instagram <strong>3 times</strong> over 3 months</li>
+                <li>Tell us what you genuinely love about Réveillé</li>
+            </ul>
+            <p style="margin-top: 1rem;">This includes free lifetime access to <strong>all future tools</strong> we develop. Forever.</p>
+        </div>
+        
+        <form id="waitlistForm" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label class="question-label">Why are you excited to try Réveillé?</label>
+                <textarea 
+                    id="excitement" 
+                    placeholder="Share what draws you to archiving your inner world..."
+                    required
+                    maxlength="1000"
+                    oninput="updateCharCount()"
+                ></textarea>
+                <div class="char-count">
+                    <span id="charCount">0</span>/1000 characters
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Your Email</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    placeholder="you@example.com"
+                    required
+                >
+                <p class="hint">We'll never spam you. Promise.</p>
+            </div>
+            
+            <div class="form-group">
+                <label>Instagram Handle</label>
+                <input 
+                    type="text" 
+                    id="instagram" 
+                    placeholder="@yourhandle"
+                    required
+                >
+                <p class="hint">So we can follow your journey and see your features!</p>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                Join the Waitlist
+            </button>
+        </form>
+        
+        <div class="success-message" id="successMessage">
+            <h3>✓ You're on the list!</h3>
+            <p>Thank you for joining the Réveillé pilot program. We'll notify you as soon as you've been accepted into the cohort.</p>
+            <p style="margin-top: 1rem; opacity: 0.9;">Check your email for next steps.</p>
+        </div>
+    </div>
+
+    <script>
+        function updateCharCount() {
+            const textarea = document.getElementById('excitement');
+            const charCount = document.getElementById('charCount');
+            charCount.textContent = textarea.value.length;
+        }
+        
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const excitement = document.getElementById('excitement').value;
+            const email = document.getElementById('email').value;
+            const instagram = document.getElementById('instagram').value;
+            
+            // This is where you'll integrate with Mailchimp
+            // See integration code below
+            
+            const data = {
+                excitement: excitement,
+                email: email,
+                instagram: instagram,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('Waitlist submission:', data);
+            
+            // For now, show success message
+            document.getElementById('waitlistForm').style.display = 'none';
+            document.getElementById('successMessage').classList.add('show');
+            
+            // In production, you would send this to:
+            // 1. Mailchimp API
+            // 2. Your own backend
+            // 3. Google Sheets (simple option)
+            // 4. Airtable
+            
+            // Example Mailchimp integration (uncomment when ready):
+            /*
+            fetch('https://YOUR-SERVER.us1.list-manage.com/subscribe/post-json?u=XXX&id=YYY', {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    EMAIL: email,
+                    INSTAGRAM: instagram,
+                    EXCITEMENT: excitement
+                })
+            }).then(() => {
+                document.getElementById('waitlistForm').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+            });
+            */
+        }
+    </script>
+</body>
+</html>

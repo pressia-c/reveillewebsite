@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Réveillé Feedback Box</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;500;600&display=swap');
+        
+        :root {
+            --navy: #13273F;
+            --charcoal: #272836;
+            --cream: #E7E5DB;
+            --warm-white: #F5F4EF;
+            --accent-sage: #8B9B8E;
+            --accent-gold: #C9A961;
+        }
+        
+        /* Floating Feedback Button */
+        .feedback-trigger {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(19, 39, 63, 0.3);
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feedback-trigger:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 12px 35px rgba(19, 39, 63, 0.4);
+        }
+        
+        .feedback-trigger.active {
+            background: var(--accent-sage);
+        }
+        
+        /* Feedback Modal */
+        .feedback-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(19, 39, 63, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .feedback-modal.show {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .feedback-box {
+            background: white;
+            border-radius: 24px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 3rem 2.5rem;
+            position: relative;
+            animation: slideUp 0.4s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-btn:hover {
+            opacity: 1;
+            background: var(--warm-white);
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .feedback-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .feedback-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        
+        .feedback-subtitle {
+            color: var(--charcoal);
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .feedback-note {
+            background: var(--warm-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--charcoal);
+        }
+        
+        .feedback-note strong {
+            color: var(--navy);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: var(--navy);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        
+        textarea,
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: var(--warm-white);
+            color: var(--navy);
+        }
+        
+        textarea {
+            min-height: 150px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+        
+        textarea:focus,
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-sage);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 155, 142, 0.1);
+        }
+        
+        .emoji-selector {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .emoji-option {
+            background: none;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .emoji-option:hover,
+        .emoji-option.selected {
+            border-color: var(--accent-sage);
+            background: var(--warm-white);
+            transform: scale(1.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--navy), var(--charcoal));
+            color: white;
+            padding: 1.25rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(19, 39, 63, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .success-state {
+            display: none;
+            text-align: center;
+            padding: 2rem 0;
+        }
+        
+        .success-state.show {
+            display: block;
+        }
+        
+        .success-state .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .success-state h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.75rem;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+        
+        .success-state p {
+            color: var(--charcoal);
+            line-height: 1.7;
+        }
+        
+        .char-count {
+            text-align: right;
+            font-size: 0.85rem;
+            color: var(--charcoal);
+            opacity: 0.5;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .feedback-trigger {
+                bottom: 1rem;
+                right: 1rem;
+                width: 56px;
+                height: 56px;
+            }
+            
+            .feedback-box {
+                padding: 2rem 1.5rem;
+            }
+            
+            .emoji-selector {
+                gap: 0.5rem;
+            }
+            
+            .emoji-option {
+                padding: 0.75rem 1rem;
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body style="font-family: 'Inter', sans-serif; background: var(--cream); padding: 2rem;">
+    <!-- Floating Feedback Button -->
+    <button class="feedback-trigger" onclick="openFeedback()" id="feedbackBtn">
+        💌
+    </button>
+
+    <!-- Feedback Modal -->
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="feedback-box">
+            <button class="close-btn" onclick="closeFeedback()">×</button>
+            
+            <div id="feedbackForm">
+                <div class="feedback-header">
+                    <div class="feedback-icon">📮</div>
+                    <h2 class="feedback-title">Drop Your Feedback</h2>
+                    <p class="feedback-subtitle">We read every single message. Your voice shapes Réveillé.</p>
+                </div>
+                
+                <div class="feedback-note">
+                    <strong>💡 Remember:</strong> Submit 5 pieces of feedback over 3 months and get <strong>lifetime free access</strong> to all Réveillé tools!
+                </div>
+                
+                <form onsubmit="handleFeedbackSubmit(event)">
+                    <div class="form-group">
+                        <label>How are you feeling about Réveillé?</label>
+                        <div class="emoji-selector">
+                            <button type="button" class="emoji-option" onclick="selectEmoji(this, '😍')" data-value="love">😍</button>
+                            <button type="button" class="emoji-option" onclick="selectEmoji(this, '😊')" data-value="like">😊</button>
+                            <button type="button" class="emoji-option" onclick="selectEmoji(this, '😐')" data-value="neutral">😐</button>
+                            <button type="button" class="emoji-option" onclick="selectEmoji(this, '😕')" data-value="confused">😕</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>What's on your mind?</label>
+                        <textarea 
+                            id="feedbackText" 
+                            placeholder="Share your thoughts, ideas, bugs, features you'd love to see..."
+                            required
+                            maxlength="2000"
+                            oninput="updateFeedbackCount()"
+                        ></textarea>
+                        <div class="char-count">
+                            <span id="feedbackCount">0</span>/2000 characters
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Category (optional)</label>
+                        <select id="feedbackCategory">
+                            <option value="">Choose a category</option>
+                            <option value="feature">✨ Feature Request</option>
+                            <option value="bug">🐛 Bug Report</option>
+                            <option value="love">❤️ What I Love</option>
+                            <option value="design">🎨 Design Feedback</option>
+                            <option value="other">💭 Other Thoughts</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Your Email (optional, for follow-up)</label>
+                        <input 
+                            type="email" 
+                            id="feedbackEmail" 
+                            placeholder="you@example.com"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Drop in the Box 📮
+                    </button>
+                </form>
+            </div>
+            
+            <div class="success-state" id="successState">
+                <div class="icon">✨</div>
+                <h3>Thank You!</h3>
+                <p>Your feedback has been received. We genuinely appreciate you taking the time to help shape Réveillé.</p>
+                <p style="margin-top: 1rem; opacity: 0.8;">Keep track of your submissions — 5 feedback drops = lifetime free access!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Content -->
+    <div style="max-width: 800px; margin: 0 auto; background: white; padding: 3rem; border-radius: 24px;">
+        <h1 style="font-family: 'Crimson Pro', serif; font-size: 2.5rem; color: var(--navy); margin-bottom: 1rem;">Feedback Box Demo</h1>
+        <p style="line-height: 1.7; color: var(--charcoal); margin-bottom: 2rem;">
+            This is a demo page showing the feedback box in action. Click the floating button in the bottom right corner to try it out!
+        </p>
+        
+        <h2 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">How to Use</h2>
+        <ol style="line-height: 2; color: var(--charcoal);">
+            <li>Click the 💌 button in the bottom-right corner</li>
+            <li>Select your mood emoji</li>
+            <li>Share your thoughts (required)</li>
+            <li>Optionally categorize and add your email</li>
+            <li>Submit your feedback</li>
+        </ol>
+        
+        <h2 style="font-family: 'Crimson Pro', serif; font-size: 1.75rem; color: var(--navy); margin: 2rem 0 1rem;">Integration</h2>
+        <p style="line-height: 1.7; color: var(--charcoal); margin-bottom: 1rem;">
+            To add this to your website or app, simply copy the HTML, CSS, and JavaScript from this file into your project.
+        </p>
+        <p style="line-height: 1.7; color: var(--charcoal);">
+            The feedback button will float on every page and users can submit feedback anytime.
+        </p>
+    </div>
+
+    <script>
+        let selectedMood = null;
+        
+        function openFeedback() {
+            document.getElementById('feedbackModal').classList.add('show');
+            document.getElementById('feedbackBtn').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeFeedback() {
+            document.getElementById('feedbackModal').classList.remove('show');
+            document.getElementById('feedbackBtn').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Reset form after closing
+            setTimeout(() => {
+                document.getElementById('feedbackForm').style.display = 'block';
+                document.getElementById('successState').classList.remove('show');
+                document.querySelector('form').reset();
+                document.querySelectorAll('.emoji-option').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                selectedMood = null;
+            }, 300);
+        }
+        
+        function selectEmoji(button, emoji) {
+            // Remove selection from all
+            document.querySelectorAll('.emoji-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            // Add selection to clicked
+            button.classList.add('selected');
+            selectedMood = button.dataset.value;
+        }
+        
+        function updateFeedbackCount() {
+            const textarea = document.getElementById('feedbackText');
+            const count = document.getElementById('feedbackCount');
+            count.textContent = textarea.value.length;
+        }
+        
+        function handleFeedbackSubmit(event) {
+            event.preventDefault();
+            
+            const feedbackData = {
+                mood: selectedMood,
+                text: document.getElementById('feedbackText').value,
+                category: document.getElementById('feedbackCategory').value,
+                email: document.getElementById('feedbackEmail').value,
+                timestamp: new Date().toISOString(),
+                page: window.location.href
+            };
+            
+            console.log('Feedback submitted:', feedbackData);
+            
+            // Here you would send to your backend
+            // Options:
+            // 1. Firebase Firestore
+            // 2. Your own API
+            // 3. Airtable
+            // 4. Google Forms (simplest)
+            
+            // Example: Send to your backend
+            /*
+            fetch('https://your-backend.com/api/feedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(feedbackData)
+            }).then(response => {
+                if (response.ok) {
+                    showSuccess();
+                }
+            });
+            */
+            
+            // For demo, just show success
+            showSuccess();
+        }
+        
+        function showSuccess() {
+            document.getElementById('feedbackForm').style.display = 'none';
+            document.getElementById('successState').classList.add('show');
+            
+            // Close after 3 seconds
+            setTimeout(() => {
+                closeFeedback();
+            }, 3000);
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('feedbackModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('feedbackModal')) {
+                closeFeedback();
+            }
+        });
+        
+        // Close with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeFeedback();
+            }
+        });
+    </script>
+</body>
+</html>
