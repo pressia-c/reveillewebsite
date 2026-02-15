@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réveillé - Observe Your Inner World</title>
+    <title>Réveillé - Building Infrastructure for the Inner Life</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@400;500;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
         
         * {
             margin: 0;
@@ -14,19 +14,21 @@
         }
         
         :root {
-            --navy: #13273F;
-            --charcoal: #272836;
-            --cream: #E7E5DB;
-            --warm-white: #F5F4EF;
-            --accent-yellow: #8B9B8E;
+            --background-soft: #FFFFFF;
+            --background-beige: #E7E5DB;
+            --navy-text: #272836;
+            --accent-yellow: #F4D06F;
             
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-serif: 'EB Garamond', Georgia, serif;
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: var(--cream);
-            color: var(--navy);
+            font-family: var(--font-sans);
+            background: var(--background-soft);
+            color: var(--navy-text);
             overflow-x: hidden;
+            line-height: 1.6;
         }
         
         /* Navigation */
@@ -35,10 +37,22 @@
             top: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(19, 39, 63, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(39, 40, 54, 0.08);
             z-index: 1000;
             padding: 1.25rem 3rem;
+            animation: slideDown 0.6s ease-out;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
         
         .nav-container {
@@ -50,10 +64,10 @@
         }
         
         .logo {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.75rem;
-            font-weight: 400;
-            color: var(--navy);
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--navy-text);
             text-decoration: none;
         }
         
@@ -64,51 +78,67 @@
         }
         
         .nav-links a {
-            color: var(--navy);
+            color: var(--navy-text);
             text-decoration: none;
             font-size: 0.95rem;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding-bottom: 4px;
         }
         
-        .nav-links a:hover {
-            color: var(--accent-sage);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-yellow);
+            transition: width 0.3s ease;
         }
         
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Buttons */
         .btn-primary {
-            background: linear-gradient(135deg, var(--navy), var(--charcoal));
-            color: var(--cream);
-            padding: 0.75rem 1.75rem;
-            border-radius: 50px;
+            background: var(--accent-yellow);
+            color: var(--navy-text);
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
-            transition: transform 0.3s, box-shadow 0.3s;
+            font-weight: 600;
+            transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             font-size: 0.95rem;
+            display: inline-block;
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(19, 39, 63, 0.25);
+            box-shadow: 0 8px 20px rgba(244, 208, 111, 0.4);
         }
         
         .btn-secondary {
-            background: white;
-            color: var(--navy);
-            padding: 0.75rem 1.75rem;
-            border-radius: 50px;
+            background: transparent;
+            color: var(--navy-text);
+            padding: 0.875rem 2rem;
+            border-radius: 8px;
             text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            border: 2px solid var(--navy);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid var(--navy-text);
             cursor: pointer;
             font-size: 0.95rem;
+            display: inline-block;
         }
         
         .btn-secondary:hover {
-            background: var(--navy);
-            color: var(--cream);
+            box-shadow: 0 0 20px rgba(244, 208, 111, 0.3);
+            border-color: var(--accent-yellow);
         }
         
         /* Hero Section */
@@ -119,45 +149,53 @@
             justify-content: center;
             padding: 8rem 3rem 4rem;
             position: relative;
-            overflow: hidden;
+            background: var(--background-soft);
         }
         
         .hero-content {
-            max-width: 1200px;
+            max-width: 900px;
             text-align: center;
             position: relative;
-            z-index: 2;
         }
         
         .hero h1 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 5rem;
-            font-weight: 300;
-            color: var(--navy);
+            font-family: var(--font-serif);
+            font-size: 4rem;
+            font-weight: 400;
+            color: var(--navy-text);
             margin-bottom: 1.5rem;
-            line-height: 1.1;
-            animation: fadeInUp 1s ease-out;
+            line-height: 1.15;
+            opacity: 0;
+            animation: typewriterFade 2s ease-out 0.3s forwards;
         }
         
-        .hero .tagline {
-            font-size: 1.5rem;
-            color: var(--charcoal);
+        @keyframes typewriterFade {
+            from {
+                opacity: 0;
+                letter-spacing: 0.2em;
+            }
+            to {
+                opacity: 1;
+                letter-spacing: 0;
+            }
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--navy-text);
             margin-bottom: 3rem;
-            opacity: 0.8;
-            animation: fadeInUp 1s ease-out 0.2s backwards;
-        }
-        
-        .hero-cta {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            animation: fadeInUp 1s ease-out 0.4s backwards;
+            line-height: 1.7;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.8s forwards;
         }
         
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -165,39 +203,36 @@
             }
         }
         
-        /* Doodle Background Elements */
-        .doodle {
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+        }
+        
+        /* Yellow Doodle Accent */
+        .doodle-accent {
             position: absolute;
             opacity: 0.15;
+            stroke: var(--accent-yellow);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+        }
+        
+        .doodle-1 {
+            top: 15%;
+            left: 10%;
+            width: 80px;
             animation: float 20s ease-in-out infinite;
         }
         
-        .doodle-flower-1 {
-            top: 15%;
-            left: 10%;
-            width: 120px;
-            animation-delay: 0s;
-        }
-        
-        .doodle-flower-2 {
+        .doodle-2 {
             top: 60%;
-            right: 15%;
+            right: 12%;
             width: 100px;
-            animation-delay: 5s;
-        }
-        
-        .doodle-spiral {
-            bottom: 20%;
-            left: 8%;
-            width: 80px;
-            animation-delay: 10s;
-        }
-        
-        .doodle-circles {
-            top: 30%;
-            right: 8%;
-            width: 90px;
-            animation-delay: 3s;
+            animation: float 20s ease-in-out infinite 5s;
         }
         
         @keyframes float {
@@ -205,133 +240,247 @@
                 transform: translate(0, 0) rotate(0deg);
             }
             25% {
-                transform: translate(10px, -10px) rotate(5deg);
+                transform: translate(10px, -10px) rotate(3deg);
             }
             50% {
-                transform: translate(-5px, 10px) rotate(-3deg);
+                transform: translate(-5px, 10px) rotate(-2deg);
             }
             75% {
-                transform: translate(8px, 5px) rotate(4deg);
+                transform: translate(8px, 5px) rotate(2deg);
             }
         }
         
-        /* Features Section */
-        .features {
-            padding: 8rem 3rem;
-            background: white;
+        /* Section Styling */
+        section {
+            padding: 6rem 3rem;
             position: relative;
+        }
+        
+        .section-alt {
+            background: var(--background-beige);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .section-title {
-            font-family: 'Crimson Pro', serif;
-            font-size: 3rem;
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 4rem;
-            color: var(--navy);
-        }
-        
-        .features-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
-        }
-        
-        .feature-card {
-            padding: 2.5rem;
-            background: var(--warm-white);
-            border-radius: 24px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 40px rgba(19, 39, 63, 0.15);
-        }
-        
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            display: block;
-        }
-        
-        .feature-card h3 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 1.75rem;
+            font-family: var(--font-serif);
+            font-size: 2.75rem;
+            font-weight: 500;
+            color: var(--navy-text);
             margin-bottom: 1rem;
-            color: var(--navy);
+            text-align: center;
         }
         
-        .feature-card p {
-            color: var(--charcoal);
-            line-height: 1.7;
-            opacity: 0.8;
+        .section-subtitle {
+            text-align: center;
+            color: var(--navy-text);
+            opacity: 0.7;
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
         }
         
-        /* Pricing Section */
-        .pricing {
-            padding: 8rem 3rem;
-            background: var(--cream);
+        /* Feature Categories */
+        .feature-category {
+            margin-bottom: 5rem;
         }
         
-        .pricing-grid {
-            max-width: 1000px;
-            margin: 0 auto;
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-yellow);
+        }
+        
+        .category-icon {
+            width: 50px;
+            height: 50px;
+            stroke: var(--accent-yellow);
+            fill: none;
+            stroke-width: 2;
+        }
+        
+        .category-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--navy-text);
+        }
+        
+        .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
         
-        .pricing-card {
-            background: white;
-            border-radius: 24px;
-            padding: 3rem 2.5rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid transparent;
+        .feature-card {
+            background: var(--background-soft);
+            padding: 2rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-yellow);
+            transition: all 0.3s ease;
         }
         
-        .pricing-card.featured {
-            border-color: var(--accent-sage);
-            transform: scale(1.05);
+        .feature-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 8px 20px rgba(39, 40, 54, 0.08);
+        }
+        
+        .feature-card h4 {
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--navy-text);
+            margin-bottom: 0.75rem;
+        }
+        
+        .feature-card p {
+            color: var(--navy-text);
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+        
+        /* NLP Explanation Box */
+        .nlp-explanation {
+            background: var(--navy-text);
+            color: var(--background-soft);
+            padding: 3rem;
+            border-radius: 12px;
+            margin-bottom: 2.5rem;
+            border-left: 4px solid var(--accent-yellow);
+        }
+        
+        .nlp-explanation h4 {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .nlp-explanation p {
+            line-height: 1.8;
+            opacity: 0.95;
+            margin-bottom: 1rem;
+        }
+        
+        .nlp-explanation p:last-child {
+            margin-bottom: 0;
+        }
+        
+        /* Comparison Columns */
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 2px 1fr;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .divider {
+            background: var(--accent-yellow);
+            width: 2px;
+        }
+        
+        .comparison-column h3 {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            color: var(--navy-text);
+        }
+        
+        .comparison-list {
+            list-style: none;
+        }
+        
+        .comparison-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(39, 40, 54, 0.1);
+        }
+        
+        .comparison-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .comparison-list strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--navy-text);
+        }
+        
+        /* Pricing Tabs */
+        .pricing-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 3rem;
+            border-bottom: 2px solid var(--background-beige);
+        }
+        
+        .pricing-tab {
+            padding: 1.25rem 3rem;
+            background: transparent;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--navy-text);
+            opacity: 0.5;
+        }
+        
+        .pricing-tab.active {
+            opacity: 1;
+            border-bottom-color: var(--accent-yellow);
+        }
+        
+        .pricing-content {
+            display: none;
+        }
+        
+        .pricing-content.active {
+            display: block;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: var(--background-soft);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            border: 2px solid var(--background-beige);
+            transition: all 0.3s ease;
         }
         
         .pricing-card:hover {
-            transform: translateY(-8px) scale(1.05);
-            box-shadow: 0 20px 50px rgba(19, 39, 63, 0.2);
-        }
-        
-        .pricing-badge {
-            background: var(--accent-sage);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 1.5rem;
+            border-color: var(--accent-yellow);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(39, 40, 54, 0.1);
         }
         
         .pricing-card h3 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 2rem;
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
             margin-bottom: 1rem;
-            color: var(--navy);
+            color: var(--navy-text);
         }
         
         .price {
-            font-size: 3.5rem;
+            font-size: 3rem;
             font-weight: 600;
-            color: var(--navy);
-            margin-bottom: 0.5rem;
+            color: var(--navy-text);
+            margin: 1.5rem 0;
         }
         
-        .price span {
-            font-size: 1.25rem;
+        .price-period {
+            font-size: 1.1rem;
             font-weight: 400;
             opacity: 0.6;
         }
@@ -339,133 +488,204 @@
         .pricing-features {
             list-style: none;
             margin: 2rem 0;
-            text-align: left;
         }
         
         .pricing-features li {
             padding: 0.75rem 0;
-            color: var(--charcoal);
-            opacity: 0.8;
-        }
-        
-        .pricing-features li:before {
-            content: "✓ ";
-            color: var(--accent-sage);
-            font-weight: 600;
-            margin-right: 0.5rem;
-        }
-        
-        .savings {
-            color: var(--accent-gold);
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-        
-        /* CTA Section */
-        .cta-section {
-            padding: 8rem 3rem;
-            background: linear-gradient(135deg, var(--navy), var(--charcoal));
-            color: var(--cream);
-            text-align: center;
+            padding-left: 1.5rem;
             position: relative;
-            overflow: hidden;
+            color: var(--navy-text);
+            opacity: 0.85;
         }
         
-        .cta-section h2 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            font-weight: 400;
+        .pricing-features li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.1rem;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-yellow);
+            border-radius: 50%;
         }
         
-        .cta-section p {
-            font-size: 1.25rem;
+        /* Waitlist Form */
+        .waitlist-section {
+            background: var(--navy-text);
+            color: var(--background-soft);
+            padding: 6rem 3rem;
+        }
+        
+        .waitlist-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .waitlist-section h2 {
+            font-family: var(--font-serif);
+            font-size: 2.75rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .waitlist-section p {
+            text-align: center;
+            opacity: 0.9;
             margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
             opacity: 0.9;
         }
         
-        /* Email Subscription */
-        .email-form {
-            max-width: 500px;
-            margin: 0 auto;
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--background-soft);
+            transition: all 0.3s ease;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 0 3px rgba(244, 208, 111, 0.1);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        select option {
+            background: var(--navy-text);
+            color: var(--background-soft);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 4rem 3rem;
+            background: var(--background-beige);
+            text-align: center;
+        }
+        
+        .newsletter h3 {
+            font-family: var(--font-serif);
+            font-size: 1.75rem;
+            margin-bottom: 1rem;
+            color: var(--navy-text);
+        }
+        
+        .newsletter-form {
             display: flex;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            max-width: 500px;
+            margin: 0 auto;
         }
         
-        .email-form input {
+        .newsletter-form input {
             flex: 1;
-            padding: 1rem 1.5rem;
-            border-radius: 50px;
-            border: none;
-            font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            padding: 0.875rem 1.25rem;
+            border: 2px solid var(--navy-text);
+            border-radius: 8px;
+            background: var(--background-soft);
+            color: var(--navy-text);
         }
         
-        .email-form button {
-            background: var(--accent-sage);
-            color: white;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            border: none;
-            font-weight: 600;
+        .newsletter-form input:focus {
+            border-color: var(--accent-yellow);
+            box-shadow: 0 0 0 3px rgba(244, 208, 111, 0.2);
+        }
+        
+        /* Feedback Button */
+        .feedback-trigger {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--background-soft);
+            border: 2px solid var(--accent-yellow);
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1rem;
+            box-shadow: 0 4px 12px rgba(39, 40, 54, 0.15);
+            z-index: 999;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .email-form button:hover {
-            background: var(--accent-gold);
-            transform: translateY(-2px);
+        .feedback-trigger:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(244, 208, 111, 0.3);
         }
         
-        .substack-link {
-            color: var(--cream);
-            opacity: 0.7;
-            font-size: 0.9rem;
-            margin-top: 1rem;
+        .feedback-trigger svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--navy-text);
+            fill: none;
+            stroke-width: 2;
         }
         
         /* Footer */
         footer {
-            background: var(--navy);
-            color: var(--cream);
-            padding: 4rem 3rem 2rem;
+            background: var(--navy-text);
+            color: var(--background-soft);
+            padding: 3rem;
             text-align: center;
         }
         
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-            margin-bottom: 2rem;
-        }
-        
-        .footer-links a {
-            color: var(--cream);
+        footer a {
+            color: var(--accent-yellow);
             text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: var(--background-beige);
+            padding: 2rem 3rem;
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--navy-text);
             opacity: 0.8;
-            transition: opacity 0.3s;
         }
         
-        .footer-links a:hover {
-            opacity: 1;
-        }
-        
-        .copyright {
-            opacity: 0.6;
-            font-size: 0.9rem;
-        }
-        
-        /* Mobile Menu */
-        .mobile-menu-btn {
+        /* Success Message */
+        .success-message {
             display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--navy);
-            cursor: pointer;
+            background: var(--accent-yellow);
+            color: var(--navy-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .success-message.show {
+            display: block;
         }
         
         /* Responsive */
@@ -478,79 +698,46 @@
                 display: none;
             }
             
-            .mobile-menu-btn {
-                display: block;
-            }
-            
             .hero {
                 padding: 6rem 1.5rem 3rem;
             }
             
             .hero h1 {
-                font-size: 3rem;
+                font-size: 2.5rem;
             }
             
-            .hero .tagline {
-                font-size: 1.15rem;
+            .hero-subtitle {
+                font-size: 1.1rem;
             }
             
             .hero-cta {
                 flex-direction: column;
             }
             
-            .section-title {
-                font-size: 2.25rem;
-            }
-            
-            .features,
-            .pricing,
-            .cta-section {
+            section {
                 padding: 4rem 1.5rem;
             }
             
-            .pricing-card.featured {
-                transform: scale(1);
+            .section-title {
+                font-size: 2rem;
             }
             
-            .email-form {
+            .comparison-section {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .divider {
+                display: none;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
                 flex-direction: column;
             }
-            
-            .cta-section h2 {
-                font-size: 2.5rem;
-            }
-            
-            .doodle {
-                opacity: 0.08;
-            }
-        }
-        
-        /* Sketch animations */
-        @keyframes drawLine {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-        
-        .sketch-path {
-            stroke-dasharray: 1000;
-            stroke-dashoffset: 1000;
-            animation: drawLine 2s ease-out forwards;
-        }
-        
-        /* Success message */
-        .success-message {
-            display: none;
-            background: var(--accent-sage);
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            margin-top: 1rem;
-            animation: fadeInUp 0.5s ease-out;
-        }
-        
-        .success-message.show {
-            display: block;
         }
     </style>
 </head>
@@ -558,199 +745,480 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="#" class="logo">Réveillé</a>
+            <a href="#home" class="logo">Réveillé</a>
             <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#what">What Does Réveillé Do</a>
                 <a href="#features">Features</a>
                 <a href="#pricing">Pricing</a>
-                <a href="#pilot">Pilot Program</a>
-                <a href="https://reveille.substack.com" target="_blank">Blog</a>
-                <a href="#pilot" class="btn-primary">Join Pilot</a>
+                <a href="#waitlist">Join Pilot</a>
             </div>
-            <button class="mobile-menu-btn">☰</button>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <!-- Doodle decorations -->
-        <svg class="doodle doodle-flower-1" viewBox="0 0 100 100">
-            <path class="sketch-path" d="M50,30 Q35,25 30,40 T50,50 Q65,55 70,40 T50,30 M50,50 Q45,65 50,70" 
-                  stroke="#13273F" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <section class="hero" id="home">
+        <!-- Yellow Doodles -->
+        <svg class="doodle-accent doodle-1" viewBox="0 0 100 100">
+            <path d="M20,50 Q30,20 50,30 T80,50 Q70,80 50,70 T20,50" />
+            <circle cx="50" cy="50" r="5" stroke-width="3"/>
         </svg>
         
-        <svg class="doodle doodle-flower-2" viewBox="0 0 100 100">
-            <circle class="sketch-path" cx="50" cy="30" r="8" stroke="#13273F" stroke-width="2" fill="none"/>
-            <circle class="sketch-path" cx="30" cy="50" r="8" stroke="#13273F" stroke-width="2" fill="none" style="animation-delay: 0.2s"/>
-            <circle class="sketch-path" cx="70" cy="50" r="8" stroke="#13273F" stroke-width="2" fill="none" style="animation-delay: 0.4s"/>
-            <circle class="sketch-path" cx="50" cy="70" r="8" stroke="#13273F" stroke-width="2" fill="none" style="animation-delay: 0.6s"/>
-            <circle class="sketch-path" cx="50" cy="50" r="5" stroke="#13273F" stroke-width="2" fill="none" style="animation-delay: 0.8s"/>
-        </svg>
-        
-        <svg class="doodle doodle-spiral" viewBox="0 0 100 100">
-            <path class="sketch-path" d="M50,50 Q60,40 70,50 T80,70 Q75,85 60,85 T40,75 Q30,60 40,45 T55,40" 
-                  stroke="#13273F" stroke-width="2" fill="none" stroke-linecap="round"/>
-        </svg>
-        
-        <svg class="doodle doodle-circles" viewBox="0 0 100 100">
-            <circle cx="30" cy="30" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="50" cy="25" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="70" cy="30" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="25" cy="50" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="50" cy="50" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="75" cy="50" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="30" cy="70" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="50" cy="75" r="3" fill="#13273F" opacity="0.3"/>
-            <circle cx="70" cy="70" r="3" fill="#13273F" opacity="0.3"/>
+        <svg class="doodle-accent doodle-2" viewBox="0 0 100 100">
+            <path d="M30,30 L70,30 L70,70 L30,70 Z" />
+            <line x1="30" y1="50" x2="70" y2="50" />
+            <line x1="50" y1="30" x2="50" y2="70" />
         </svg>
         
         <div class="hero-content">
-            <h1>Archive Your Inner World</h1>
-            <p class="tagline">A sanctuary for your thoughts, patterns, and growth</p>
+            <h1>Building infrastructure for the inner life.</h1>
+            <p class="hero-subtitle">
+                Réveillé is a longitudinal writing and insight platform that helps individuals and therapists detect patterns across thoughts, emotions, and lived experience.
+            </p>
             <div class="hero-cta">
-                <a href="#pilot" class="btn-primary">Join Pilot Program</a>
-                <a href="#features" class="btn-secondary">Learn More</a>
+                <a href="#waitlist" class="btn-primary">Join Pilot Program</a>
+                <a href="#what" class="btn-secondary">Learn More</a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="features">
-        <h2 class="section-title">Designed for Self-Discovery</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <span class="feature-icon">✏️</span>
-                <h3>Capture Everything</h3>
-                <p>Journal entries, quick notes, and fleeting thoughts. Your complete archive of reflection, organized beautifully.</p>
+    <!-- What Does Réveillé Do -->
+    <section class="section-alt" id="what">
+        <div class="container">
+            <h2 class="section-title">Everything Included</h2>
+            <p class="section-subtitle">Comprehensive tools for observing your inner world</p>
+            
+            <!-- CORE CAPTURE TOOLS -->
+            <div class="feature-category">
+                <div class="category-header">
+                    <svg class="category-icon" viewBox="0 0 24 24">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                    <h3 class="category-title">Core Capture Tools</h3>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Journal</h4>
+                        <p>Long-form reflective writing stored longitudinally.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Photo Upload</h4>
+                        <p>Attach images to entries for contextual memory capture.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Quick Notes</h4>
+                        <p>Short-form entries for spontaneous observations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Unlimited Storage</h4>
+                        <p>No caps. Your archive grows with you.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Auto Tagging</h4>
+                        <p>Entries automatically categorized by recurring themes.</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <span class="feature-icon">🌟</span>
-                <h3>AI-Powered Insights</h3>
-                <p>Discover patterns in your writing. Our AI reveals themes, emotional arcs, and the web of your interests over time.</p>
+            <!-- AI & LANGUAGE INTELLIGENCE -->
+            <div class="feature-category">
+                <div class="category-header">
+                    <svg class="category-icon" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10"/>
+                        <circle cx="12" cy="12" r="3"/>
+                        <line x1="12" y1="2" x2="12" y2="8"/>
+                        <line x1="12" y1="16" x2="12" y2="22"/>
+                        <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/>
+                        <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/>
+                    </svg>
+                    <h3 class="category-title">AI & Language Intelligence</h3>
+                </div>
+                
+                <div class="nlp-explanation">
+                    <h4>Understanding Our AI</h4>
+                    <p>
+                        <strong>Natural Language Processing</strong> analyzes your word choices, sentence patterns, and emotional vocabulary to reveal insights about your inner state. This is sophisticated AI that works entirely through your language.
+                    </p>
+                    <p>
+                        <strong>What we detect:</strong> Hesitation markers, certainty indicators, emotional shifts, recurring themes, and temporal focus. All observations come from your writing patterns.
+                    </p>
+                    <p>
+                        <strong>Important:</strong> The system does not replace therapy or human meaning-making. It observes structure and recurrence.
+                    </p>
+                </div>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Language Observation</h4>
+                        <p>Tracks repeated phrases and shifts in narrative tone.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Sentiment Analysis</h4>
+                        <p>Detects emotional polarity and drift over time.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Theme Detection</h4>
+                        <p>Identifies recurring psychological and behavioral patterns.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Temporal Focus</h4>
+                        <p>Recognizes whether entries emphasize past, present, or future.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Custom Colors</h4>
+                        <p>Users personalize their interface.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Insight Notifications</h4>
+                        <p>Pattern-based alerts when meaningful trends emerge.</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <span class="feature-icon">📦</span>
-                <h3>Memory Box</h3>
-                <p>Search your entire archive by themes, dates, or words. Revisit any moment in your journey whenever you need it.</p>
+            <!-- MEMORY ARCHIVE -->
+            <div class="feature-category">
+                <div class="category-header">
+                    <svg class="category-icon" viewBox="0 0 24 24">
+                        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                    </svg>
+                    <h3 class="category-title">Memory Archive</h3>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Advanced Search</h4>
+                        <p>Search by keyword, theme, tone, or date.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Timeline View</h4>
+                        <p>Chronological visualization of entries.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Smart Filters</h4>
+                        <p>Filter by tag, theme, sentiment, or shared status.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Export Your Data</h4>
+                        <p>Download entries and structured insights.</p>
+                    </div>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <span class="feature-icon">🤝</span>
-                <h3>Therapist Collaboration</h3>
-                <p>Share entries securely with your therapist. Organization accounts make client work seamless and private.</p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🌍</span>
-                <h3>Collective Wisdom</h3>
-                <p>Anonymous insights from the community. Discover common themes and know you're not alone in your experiences.</p>
-            </div>
-            
-            <div class="feature-card">
-                <span class="feature-icon">🔒</span>
-                <h3>Private & Secure</h3>
-                <p>Your data is yours. End-to-end encryption, Face ID, and complete control over what you share.</p>
+            <!-- INSIGHT WEB PLATFORM -->
+            <div class="feature-category">
+                <div class="category-header">
+                    <svg class="category-icon" viewBox="0 0 24 24">
+                        <circle cx="5" cy="5" r="3"/>
+                        <circle cx="19" cy="5" r="3"/>
+                        <circle cx="5" cy="19" r="3"/>
+                        <circle cx="19" cy="19" r="3"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <line x1="7" y1="7" x2="10" y2="10"/>
+                        <line x1="17" y1="7" x2="14" y2="10"/>
+                        <line x1="7" y1="17" x2="10" y2="14"/>
+                        <line x1="17" y1="17" x2="14" y2="14"/>
+                    </svg>
+                    <h3 class="category-title">Insight Web Platform</h3>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Interactive Visualization</h4>
+                        <p>Dynamic network graph of recurring themes.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>One Web Per Year</h4>
+                        <p>Each year generates one evolving thematic map.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Cross-Platform Sync</h4>
+                        <p>Access seamlessly across devices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>End-to-End Encryption</h4>
+                        <p>All data encrypted in transit and at rest.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Community Insights</h4>
+                        <p>Optional voluntary participation in anonymized research supporting psychology, behavior, biology, and physiology studies.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing">
-        <h2 class="section-title">Simple, Honest Pricing</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card">
-                <h3>Monthly</h3>
-                <div class="price">$19<span>/month</span></div>
-                <ul class="pricing-features">
-                    <li>Unlimited entries & notes</li>
-                    <li>AI pattern recognition</li>
-                    <li>Web of interests mapping</li>
-                    <li>Search & filter archive</li>
-                    <li>Secure cloud sync</li>
-                    <li>Mobile & desktop access</li>
-                </ul>
-                <a href="#pilot" class="btn-secondary" style="width: 100%; display: block; text-align: center;">Start Monthly</a>
+    <!-- Features: Individuals vs Therapists -->
+    <section id="features">
+        <div class="container">
+            <h2 class="section-title">Built for Individuals and Therapists</h2>
+            
+            <div class="comparison-section">
+                <div class="comparison-column">
+                    <h3>Individuals</h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <strong>Personal Archive</strong>
+                            Private longitudinal writing space.
+                        </li>
+                        <li>
+                            <strong>Insight Web</strong>
+                            Visual map of recurring themes.
+                        </li>
+                        <li>
+                            <strong>Selective Sharing</strong>
+                            Share specific entries with a therapist.
+                        </li>
+                        <li>
+                            <strong>Preventative Pattern Awareness</strong>
+                            Detect trends before crisis.
+                        </li>
+                        <li>
+                            <strong>Data Ownership</strong>
+                            Full export and archive control.
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="comparison-column">
+                    <h3>Therapists</h3>
+                    <ul class="comparison-list">
+                        <li>
+                            <strong>Enterprise Dashboard</strong>
+                            Manage multiple client profiles within one structured interface.
+                        </li>
+                        <li>
+                            <strong>Client Profile Vault</strong>
+                            Each client has a dedicated archive.
+                        </li>
+                        <li>
+                            <strong>Shared Vault Architecture</strong>
+                            Client-shared entries appear in both accounts. Synchronized, but accounts remain separate.
+                        </li>
+                        <li>
+                            <strong>Private Clinical Notes</strong>
+                            Therapist session notes remain invisible unless marked shared.
+                        </li>
+                        <li>
+                            <strong>Optional Shared Notes</strong>
+                            Therapist can make notes visible to client.
+                        </li>
+                        <li>
+                            <strong>Pattern Contribution System</strong>
+                            Therapist annotations contribute to the client's Insight Web.
+                        </li>
+                        <li>
+                            <strong>Unified Longitudinal View</strong>
+                            Track thematic development across sessions.
+                        </li>
+                    </ul>
+                </div>
             </div>
             
-            <div class="pricing-card featured">
-                <span class="pricing-badge">Best Value</span>
-                <h3>Annual</h3>
-                <div class="price">$199<span>/year</span></div>
-                <p class="savings">Save $29 per year</p>
-                <ul class="pricing-features">
-                    <li>Everything in Monthly</li>
-                    <li>Priority AI insights</li>
-                    <li>Advanced analytics</li>
-                    <li>Therapist sharing (coming soon)</li>
-                    <li>Premium support</li>
-                    <li>Early access to features</li>
-                </ul>
-                <a href="#pilot" class="btn-primary" style="width: 100%; display: block; text-align: center;">Start Annual</a>
+            <div style="background: var(--background-beige); padding: 2rem; border-radius: 8px; margin-top: 3rem; border-left: 4px solid var(--accent-yellow);">
+                <p style="font-weight: 600; margin-bottom: 0.5rem;">Account Structure</p>
+                <p>Individual and Therapist accounts are fully separate systems. Sharing occurs only at the specific file level. No automatic merging of accounts. Explicit consent-based sharing only.</p>
             </div>
         </div>
     </section>
 
-    <!-- CTA / Pilot Program Section -->
-    <section class="cta-section" id="pilot">
-        <h2>Join the Pilot Program</h2>
-        <p>Be among the first to experience Réveillé. Limited spots available.</p>
-        
-        <form class="email-form" onsubmit="handleSubmit(event)">
-            <input type="email" id="emailInput" placeholder="Enter your email" required>
-            <button type="submit">Join Waitlist</button>
-        </form>
-        
-        <div class="success-message" id="successMessage">
-            ✓ Thank you! We'll be in touch soon.
+    <!-- Pricing -->
+    <section class="section-alt" id="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Honest Pricing</h2>
+            <p class="section-subtitle">Choose what fits your journey</p>
+            
+            <div class="pricing-tabs">
+                <button class="pricing-tab active" onclick="switchPlan('individual')">Individual</button>
+                <button class="pricing-tab" onclick="switchPlan('organization')">Organizations</button>
+            </div>
+            
+            <!-- Individual Pricing -->
+            <div class="pricing-content active" id="individual-content">
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Monthly</h3>
+                        <div class="price">$19<span class="price-period">/month</span></div>
+                        <ul class="pricing-features">
+                            <li><strong>Unlimited</strong> entries & notes</li>
+                            <li><strong>AI pattern recognition</strong></li>
+                            <li><strong>Interest web</strong> mapping</li>
+                            <li><strong>Search & filter</strong> archive</li>
+                            <li><strong>Secure</strong> cloud sync</li>
+                            <li>Mobile & desktop access</li>
+                        </ul>
+                        <a href="#waitlist" class="btn-primary" style="width: 100%; text-align: center; display: block;">Start Monthly</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>Annual</h3>
+                        <div class="price">$199<span class="price-period">/year</span></div>
+                        <p style="color: var(--accent-yellow); font-weight: 600; margin-top: -1rem;">Save $29 per year</p>
+                        <ul class="pricing-features">
+                            <li>Everything in Monthly</li>
+                            <li><strong>Priority support</strong></li>
+                            <li><strong>Early access</strong> to features</li>
+                            <li><strong>Advanced analytics</strong></li>
+                            <li><strong>Community insights</strong></li>
+                        </ul>
+                        <a href="#waitlist" class="btn-primary" style="width: 100%; text-align: center; display: block;">Start Annual</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Organization Pricing -->
+            <div class="pricing-content" id="organization-content">
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Professional</h3>
+                        <div class="price">$49<span class="price-period">/month</span></div>
+                        <p style="opacity: 0.7; margin-top: -1rem; font-size: 0.95rem;">For individual therapists</p>
+                        <ul class="pricing-features">
+                            <li>Everything in Individual</li>
+                            <li>Up to <strong>25 active clients</strong></li>
+                            <li><strong>Client dashboard</strong></li>
+                            <li><strong>Secure entry sharing</strong></li>
+                            <li><strong>Private therapist notes</strong></li>
+                            <li><strong>Session prep</strong> tools</li>
+                        </ul>
+                        <a href="#waitlist" class="btn-primary" style="width: 100%; text-align: center; display: block;">Start Professional</a>
+                    </div>
+                    
+                    <div class="pricing-card">
+                        <h3>Practice</h3>
+                        <div class="price">$149<span class="price-period">/month</span></div>
+                        <p style="opacity: 0.7; margin-top: -1rem; font-size: 0.95rem;">For therapy practices</p>
+                        <ul class="pricing-features">
+                            <li>Everything in Professional</li>
+                            <li><strong>3-10 therapists</strong></li>
+                            <li><strong>Unlimited clients</strong></li>
+                            <li><strong>Collaborative notes</strong></li>
+                            <li><strong>Practice analytics</strong></li>
+                            <li><strong>Priority support</strong></li>
+                        </ul>
+                        <a href="#waitlist" class="btn-primary" style="width: 100%; text-align: center; display: block;">Start Practice</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <p class="substack-link">
-            Read our thoughts on mindfulness and self-reflection at 
-            <a href="https://reveille.substack.com" target="_blank" style="color: var(--accent-gold); text-decoration: underline;">reveille.substack.com</a>
-        </p>
     </section>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <p><strong>Important:</strong> Réveillé does not replace therapists. It strengthens structured reflection and shared insight.</p>
+    </div>
+
+    <!-- Waitlist -->
+    <section class="waitlist-section" id="waitlist">
+        <div class="waitlist-container">
+            <h2>Join the Pilot Program</h2>
+            <p>Be among the first to experience Réveillé. Limited spots available.</p>
+            
+            <form onsubmit="handleWaitlistSubmit(event)">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" required placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required placeholder="you@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label>Role</label>
+                    <select required>
+                        <option value="">Select your role</option>
+                        <option value="individual">Individual</option>
+                        <option value="therapist">Therapist</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>What draws you to Réveillé? (Optional)</label>
+                    <textarea placeholder="Share what excites you about observing your inner world..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-primary" style="width: 100%;">Join Waitlist</button>
+                
+                <div class="success-message" id="waitlistSuccess">
+                    You're on the list! Check your email for next steps.
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h3>Subscribe to Our Thoughts</h3>
+            <p style="margin-bottom: 1.5rem; opacity: 0.8;">Reflections on the inner life, delivered occasionally.</p>
+            <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                <input type="email" placeholder="your@email.com" required>
+                <button type="submit" class="btn-primary">Subscribe</button>
+            </form>
+            <div class="success-message" id="newsletterSuccess" style="max-width: 500px; margin: 1rem auto 0;">
+                Subscribed! Welcome to the community.
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Button -->
+    <button class="feedback-trigger" onclick="window.location.href='mailto:feedback@reveillearchive.com'">
+        <svg viewBox="0 0 24 24">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+    </button>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-links">
-            <a href="#features">Features</a>
-            <a href="#pricing">Pricing</a>
-            <a href="https://reveille.substack.com" target="_blank">Blog</a>
-            <a href="mailto:hello@reveillearchive.com">Contact</a>
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-        </div>
-        <p class="copyright">© 2024 Réveillé. All rights reserved.</p>
+        <p>&copy; 2024 Réveillé. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; opacity: 0.7;">
+            <a href="mailto:hello@reveillearchive.com">Contact</a> | 
+            <a href="#privacy">Privacy</a> | 
+            <a href="#terms">Terms</a>
+        </p>
     </footer>
 
     <script>
-        // Email form submission
-        function handleSubmit(event) {
-            event.preventDefault();
-            const email = document.getElementById('emailInput').value;
+        // Pricing plan switcher
+        function switchPlan(plan) {
+            document.querySelectorAll('.pricing-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
             
-            // Here you would normally send to your backend
-            // For now, we'll just show success message
-            console.log('Email submitted:', email);
-            
-            // Show success message
-            document.getElementById('successMessage').classList.add('show');
-            document.getElementById('emailInput').value = '';
-            
-            // Hide after 5 seconds
-            setTimeout(() => {
-                document.getElementById('successMessage').classList.remove('show');
-            }, 5000);
-            
-            // In production, you'd integrate with:
-            // - Mailchimp API
-            // - ConvertKit
-            // - Substack API
-            // - Your own backend
+            document.querySelectorAll('.pricing-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(plan + '-content').classList.add('active');
         }
         
-        // Smooth scrolling for anchor links
+        // Waitlist form
+        function handleWaitlistSubmit(event) {
+            event.preventDefault();
+            // Here you would send to backend
+            console.log('Waitlist submission');
+            document.getElementById('waitlistSuccess').classList.add('show');
+            event.target.reset();
+            setTimeout(() => {
+                document.getElementById('waitlistSuccess').classList.remove('show');
+            }, 5000);
+        }
+        
+        // Newsletter form
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            // Here you would send to backend
+            console.log('Newsletter subscription');
+            document.getElementById('newsletterSuccess').classList.add('show');
+            event.target.reset();
+            setTimeout(() => {
+                document.getElementById('newsletterSuccess').classList.remove('show');
+            }, 5000);
+        }
+        
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -763,12 +1231,6 @@
                 }
             });
         });
-        
-        // Mobile menu (simple version - expand as needed)
-        document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
-            alert('Mobile menu coming soon! For now, scroll to sections.');
-        });
     </script>
 </body>
 </html>
-HTMLEOF
